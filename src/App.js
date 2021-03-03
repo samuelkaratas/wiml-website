@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import "./App.css";
+
+import { Switch, Route, Redirect } from "react-router-dom";
+
+import Header from "./components/header/header";
+
+import GamePage from "./pages/GamePage/GamePage";
+import JoinPartyPage from "./pages/JoinPartyPage/JoinPartyPage";
+import LobbyPage from "./pages/LobbyPage/LobbyPage";
+import HomePage from "./pages/HomePage/HomePage";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Switch className="switchContainer">
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+        <Route exact path="/game/:pid">
+          <GamePage />
+        </Route>
+        <Route exact path="/join">
+          <JoinPartyPage />
+        </Route>
+        <Route exact path="/lobby/:pid">
+          <LobbyPage />
+        </Route>
+      </Switch>
     </div>
   );
 }
