@@ -16,22 +16,16 @@ const Header = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
             <NavDropdown title="Follow Us" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Twitter</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
+              <NavDropdown.Item href="https://twitter.com/whoismostlikely" target="_blank">Twitter</NavDropdown.Item>
+              <NavDropdown.Item href="https://www.instagram.com/whoismostlikely" target="_blank">
                 Instagram
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Facebook</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
+              <NavDropdown.Item href="https://www.facebook.com/" target="_blank">Facebook</NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Nav>
-            <Nav.Link href="#deets">Download the app</Nav.Link>
+            <Nav.Link href="https://www.apple.com/tr/app-store/" target="_blank">Download the app</Nav.Link>
             <Nav.Link eventKey={2} href="/join">
               Join a party
             </Nav.Link>
