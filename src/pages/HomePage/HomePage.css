@@ -4,3 +4,8 @@
     flex-direction: column;
   }
   
+.cards-container {
+  display: flex;
+  width: 95%;
+  align-self: center;
+}

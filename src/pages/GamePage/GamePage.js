@@ -10,17 +10,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  setPartyIdRedux,
-  setUserId,
-  setIsAdmin,
-  setGameStarted,
-  resetUsers,
-  setNumberOfPeopleAnswered,
-  setShowLeaderboard,
-  setQuestionNumber,
-} from "../../redux/game/game-actions";
-
-import {
   selectUsers,
   selectPartyId,
   selectUserId,
@@ -31,27 +20,19 @@ import {
 } from "../../redux/game/game-selectors";
 
 import {
-  detachJoinedListener,
-  detachStartedListener,
-  detachAnsweredListener,
-  detachQuestionNumberListener,
   updateNumberOfPeopleAnswered,
   setupAnsweredListener,
   updateUsers,
   resetNumberOfAnswered,
   resetScore,
   setupShowLeaderboardListener,
-  changeShowLeaderboard,
-  detachShowLeaderboardListener,
   updateQuestionNumber,
   setupQuestionNumberListener,
   getQuestionText,
-  removeUserFromFirebase,
 } from "../../firebase/firebase";
 
 const GamePage = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const users = useSelector(selectUsers);
   const isAdmin = useSelector(selectIsAdmin);
@@ -123,30 +104,8 @@ const GamePage = () => {
     setupQuestionNumberListener(partyId)(dispatch);
   }, []);
 
-  const logout = () => {
-    console.log("log out");
-    detachJoinedListener(partyId);
-    detachStartedListener(partyId);
-    detachAnsweredListener(partyId);
-    detachShowLeaderboardListener(partyId);
-    detachQuestionNumberListener(partyId);
-    removeUserFromFirebase(partyId, userId);
-    dispatch(setPartyIdRedux(null));
-    dispatch(setUserId(0));
-    dispatch(setIsAdmin(null));
-    dispatch(resetUsers());
-    dispatch(setGameStarted(false));
-    dispatch(setNumberOfPeopleAnswered(0));
-    dispatch(setShowLeaderboard(false));
-    dispatch(setQuestionNumber(0));
-    history.push("/join");
-  };
-
   return (
     <div className={"gameContainer"}>
-      <div onClick={logout} className={"logoutButton"}>
-        <p className={"text"}>Log out</p>
-      </div>
       <QuestionBox question={questionText ? questionText : "Loading..."} />
       {!showLeaderboard ? (
         !selected ? (

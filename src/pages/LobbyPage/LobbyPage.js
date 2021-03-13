@@ -7,14 +7,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  setPartyIdRedux,
-  setIsAdmin,
-  resetUsers,
-  setGameStarted,
-  setUserId,
-} from "../../redux/game/game-actions";
-
-import {
   selectUsers,
   selectPartyId,
   selectIsAdmin,
@@ -23,11 +15,7 @@ import {
 } from "../../redux/game/game-selectors";
 
 import {
-  detachJoinedListener,
-  updateStarted,
-  detachStartedListener,
   setupSignoutListener,
-  removeUserFromFirebase,
 } from "../../firebase/firebase";
 
 const LobbyPage = () => {
@@ -75,30 +63,14 @@ const LobbyPage = () => {
     }
   }, [started]);
 
-  const logout = () => {
-    console.log("log out");
-    detachJoinedListener(partyId);
-    detachStartedListener(partyId);
-    removeUserFromFirebase(partyId, userId);
-    dispatch(setPartyIdRedux(null));
-    dispatch(setUserId(0));
-    dispatch(setIsAdmin(null));
-    dispatch(resetUsers());
-    dispatch(setGameStarted(false));
-    history.push("/join");
-  };
-
   const startPartyClickHandler = () => {
     console.log("asdvgsdv");
   };
 
   return (
     <div className={"lobbyContainer"}>
-      <div onClick={logout} className={"logoutButton"}>
-        <p className={"text"}>Log out</p>
-      </div>
       <div className={"textContainer"}>
-        <p className={"questionText"}>
+        <p className={"lobbyText"}>
           Your friends can join using the party id: {partyId}
         </p>
       </div>

@@ -5,3 +5,9 @@
   margin-top: 10px;
   width: 60%;
 }
+
+@media screen and (max-width: 800px) {
+  .leaderboardFlatlist {
+    width: 95vw;
+  }
+}

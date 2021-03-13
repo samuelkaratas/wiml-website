@@ -52,3 +52,9 @@ $main-color: black;
     }
   }
 }
+
+@media screen and (max-width: 800px) {
+  .group {
+    width: 90vw;
+  }
+}

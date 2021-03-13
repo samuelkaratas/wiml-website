@@ -17,3 +17,9 @@
   color: blue;
   font-weight: bold;
 }
+
+@media screen and (max-width: 800px) {
+  .button {
+    width: 95%;
+  }
+}

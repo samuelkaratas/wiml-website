@@ -4,10 +4,12 @@
   height: 100%;
   align-items: center;
   flex-direction: column;
+  margin-top: 20px;
 }
 .textContainer {
   display: flex;
   width: 80%;
+  height: auto;
   align-items: center;
   justify-content: center;
 }
@@ -23,18 +25,7 @@
   flex-direction: row;
   bottom: 30px;
 }
-.logoutButton {
-  display: flex;
-  width: 100px;
-  height: 50px;
-  position: absolute;
-  border: 1px solid white;
-  justify-content: center;
-  align-items: center;
-  border-radius: 25px;
-  margin-top: 10px;
-  right: 30px;
-}
+
 .text {
   font-size: 16;
   color: white;
@@ -76,13 +67,19 @@
   flex-direction: row;
   align-items: center;
 }
-.questionText {
+.lobbyText {
   display: flex;
   color: white;
   font-size: 30px;
   align-items: center;
   text-align: center;
-  line-height: 5px;
-  margin-top: 100px;
-  margin-bottom: 10px;
+}
+
+@media screen and (max-width: 800px) {
+  .textContainer {
+    width: 90vw;
+  }
+  .flatlist {
+    width: 80%;
+  }
 }
