@@ -71,24 +71,23 @@ const JoinPartPage = (props) => {
   const cloudinaryUpload = (photo) => {
     const formData = new FormData();
     formData.append("file", photo);
-    formData.append("upload_preset", "rfosykdy");
+    formData.append("upload_preset", "wiml-preset-name");
 
     fetch("https://api.cloudinary.com/v1_1/wiml/image/upload", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
+      method: "POST",
       body: formData,
     })
-      .then((response) => response.json())
+      .then((response) => response.text())
       .then((data) => {
-        console.log(data.secure_url);
-        setImage(data.secure_url);
+        console.log(data);
+        setImage(data)
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     if (selectedFile.length) {
-        
+        cloudinaryUpload(selectedFile);
     }
   }, [selectedFile]);
 

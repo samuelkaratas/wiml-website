@@ -83,8 +83,8 @@ const Header = () => {
   }
 
   return (
-    <div style={{position: 'sticky', top: 0}}>
-      {!partyId ? (<Navbar collapseOnSelect expand="lg" bg="transparent" variant="light" sticky="top">
+    <div style={{position: 'sticky', top: 0, zIndex: 1}}>
+      {!partyId ? (<Navbar collapseOnSelect expand="lg" style={{backgroundColor: '#e8e8e8'}} variant="light" sticky="top">
         <Navbar.Brand href="/">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
