@@ -8,8 +8,9 @@ const FileUploader = ({ onFileSelectSuccess, onFileSelectError }) => {
   const handleFileInput = (e) => {
     // handle validations
     const file = URL.createObjectURL(e.target.files[0]);
-    if (file.size > 1024) onFileSelectSuccess(file);
-    else onFileSelectSuccess(file);
+    const file2 = e.target.files[0]
+    if (file.size > 1024) onFileSelectSuccess(file, file2);
+    else onFileSelectSuccess(file, file2);
   };
 
   return (

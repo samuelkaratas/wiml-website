@@ -79,7 +79,7 @@ const LobbyPage = () => {
           <div className={"flatlistContainer"} key={item.key}>
             <div className={"imageAndNameContainer"}>
               <div className={"imageContainer"}>
-                <img className={"image"} src={userPhotoPlaceholder} />
+                <img className={"image"} src={item.imageUrl ? item.imageUrl : userPhotoPlaceholder} />
               </div>
               <p className={"username"}>{item.name}</p>
             </div>

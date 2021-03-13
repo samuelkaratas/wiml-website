@@ -32,7 +32,9 @@ const JoinPartPage = (props) => {
 
   const [image, setImage] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
   const [selectedFile, setSelectedFile] = useState("");
+  const [selectedFile2, setSelectedFile2] = useState("");
 
   const onJoinHandler = async () => {
     const exsist = await checkIfRoomExsist(partyId);
@@ -68,26 +70,26 @@ const JoinPartPage = (props) => {
     }
   };
 
-  const cloudinaryUpload = (photo) => {
+  const cloudinaryUpload = (file) => {
     const formData = new FormData();
-    formData.append("file", photo);
+    formData.append("file", file);
     formData.append("upload_preset", "wiml-preset-name");
 
     fetch("https://api.cloudinary.com/v1_1/wiml/image/upload", {
       method: "POST",
       body: formData,
     })
-      .then((response) => response.text())
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        setImage(data)
+        console.log(data.secure_url);
+        setImage(data.secure_url)
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     if (selectedFile.length) {
-        cloudinaryUpload(selectedFile);
+        cloudinaryUpload(selectedFile2);
     }
   }, [selectedFile]);
 
@@ -95,7 +97,10 @@ const JoinPartPage = (props) => {
     <div className="join-party-page-container">
       <div className="imagePressable">
         <FileUploader
-          onFileSelectSuccess={(file) => setSelectedFile(file)}
+          onFileSelectSuccess={(file, file2) => {
+            setSelectedFile(file)
+            setSelectedFile2(file2)
+          }}
           onFileSelectError={({ error }) => alert(error)}
         />
         <img

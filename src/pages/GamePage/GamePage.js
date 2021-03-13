@@ -49,18 +49,18 @@ const GamePage = () => {
   const [selected, setSelected] = useState(false);
 
   const nextClicked = async () => {
-    console.log("next Clicked");
+    //console.log("next Clicked");
   };
 
   const userClicked = (item) => {
-    console.log(item);
+    //console.log(item);
     updateNumberOfPeopleAnswered(partyId, item.key);
     setSelected(true);
   };
 
   useEffect(() => {
     const runFunction = async () => {
-      console.log("questionNumber" + questionNumber);
+      //console.log("questionNumber" + questionNumber);
       const returnedObject = await getQuestionText(questionNumber);
       setQuestionText(returnedObject.questionText);
     };

@@ -8,7 +8,10 @@ const UserButton = ({ onPress, username, imageUrl }) => {
   return (
     <div onClick={onPress} className={"userButtonContainer"}>
       <div className={"userButtonImageContainer"}>
-        <img className={"image"} src={userPhotoPlaceholder} />
+        <img
+          className={"image"}
+          src={imageUrl ? imageUrl : userPhotoPlaceholder}
+        />
       </div>
       <p className={"username"}>{username}</p>
     </div>

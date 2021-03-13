@@ -9,7 +9,7 @@ const LeaderboardItem = ({ username, score, imageUrl, isDrinking }) => {
   return (
     <div className={"leaderboardContainer"}>
       <div className={"leaderboardImageContainer"}>
-        <img className={"image"} src={userPhotoPlaceholder} />
+        <img className={"image"} src={imageUrl ? imageUrl : userPhotoPlaceholder} />
       </div>
       {isDrinking ? (
         <div className={"drinkGifContainer"}>
