@@ -17,7 +17,11 @@ import {
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setPartyIdRedux, setIsAdmin } from "../../redux/game/game-actions";
+import {
+  setPartyIdRedux,
+  setIsAdmin,
+  setJoining,
+} from "../../redux/game/game-actions";
 
 import FileUploader from "../../components/fileUploader/fileUploader";
 
@@ -31,14 +35,16 @@ const JoinPartPage = (props) => {
   const [partyId, onPartyIdChange] = useState("");
 
   const [image, setImage] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
 
   const [selectedFile, setSelectedFile] = useState("");
   const [selectedFile2, setSelectedFile2] = useState("");
 
+  const [loadingPhoto, setLoadingPhoto] = useState(false);
+
   const onJoinHandler = async () => {
     const exsist = await checkIfRoomExsist(partyId);
     if (exsist) {
+      dispatch(setJoining(true));
       joinParty(partyId, {
         name: name,
         imageUrl: image,
@@ -53,11 +59,6 @@ const JoinPartPage = (props) => {
     } else {
       alert("Party doesn't exsist");
     }
-  };
-
-  const onImagePressed = () => {
-    setModalVisible(true);
-    console.log("image Pressed");
   };
 
   const handleChange = (event) => {
@@ -82,14 +83,16 @@ const JoinPartPage = (props) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.secure_url);
-        setImage(data.secure_url)
+        setImage(data.secure_url);
+        setLoadingPhoto(false);
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     if (selectedFile.length) {
-        cloudinaryUpload(selectedFile2);
+      setLoadingPhoto(true);
+      cloudinaryUpload(selectedFile2);
     }
   }, [selectedFile]);
 
@@ -98,8 +101,8 @@ const JoinPartPage = (props) => {
       <div className="imagePressable">
         <FileUploader
           onFileSelectSuccess={(file, file2) => {
-            setSelectedFile(file)
-            setSelectedFile2(file2)
+            setSelectedFile(file);
+            setSelectedFile2(file2);
           }}
           onFileSelectError={({ error }) => alert(error)}
         />
@@ -129,7 +132,11 @@ const JoinPartPage = (props) => {
         maxLength={5}
       />
 
-      <CustomButton onPress={onJoinHandler}>Join</CustomButton>
+      {loadingPhoto ? (
+        <p style={{ color: "white" }}>Uploading photo to service...</p>
+      ) : (
+        <CustomButton onPress={onJoinHandler}>Join</CustomButton>
+      )}
     </div>
   );
 };

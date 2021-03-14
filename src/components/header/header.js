@@ -19,6 +19,7 @@ import {
   setNumberOfPeopleAnswered,
   setShowLeaderboard,
   setQuestionNumber,
+  setJoining,
 } from "../../redux/game/game-actions";
 
 import {
@@ -79,6 +80,7 @@ const Header = () => {
     dispatch(setNumberOfPeopleAnswered(0));
     dispatch(setShowLeaderboard(false));
     dispatch(setQuestionNumber(0));
+    dispatch(setJoining(false));
     history.push("/");
   }
 

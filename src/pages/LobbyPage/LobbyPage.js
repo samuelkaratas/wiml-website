@@ -12,11 +12,10 @@ import {
   selectIsAdmin,
   selectStarted,
   selectUserId,
+  selectJoining,
 } from "../../redux/game/game-selectors";
 
-import {
-  setupSignoutListener,
-} from "../../firebase/firebase";
+import { setupSignoutListener } from "../../firebase/firebase";
 
 const LobbyPage = () => {
   let { pid } = useParams();
@@ -29,35 +28,13 @@ const LobbyPage = () => {
   const isAdmin = useSelector(selectIsAdmin);
   const started = useSelector(selectStarted);
   const userId = useSelector(selectUserId);
-  /*const users = [
-    {
-      isAdmin: true,
-      key: "0",
-      name: "Sam",
-      score: 0,
-    },
-    {
-      isAdmin: false,
-      key: "1",
-      name: "Simon",
-      score: 0,
-    },
-    {
-      isAdmin: false,
-      key: "2",
-      name: "Joanna",
-      score: 0,
-    },
-  ];*/
+  const joining = useSelector(selectJoining);
 
   useEffect(() => {
-    console.log("users");
-    console.log(users);
     setupSignoutListener(partyId)(dispatch, history);
   }, []);
 
   useEffect(() => {
-    console.log(started);
     if (started) {
       history.push(`/game/${partyId}`);
     }
@@ -70,25 +47,36 @@ const LobbyPage = () => {
   return (
     <div className={"lobbyContainer"}>
       <div className={"textContainer"}>
-        <p className={"lobbyText"}>
-          Your friends can join using the party id: {partyId}
-        </p>
+        {joining ? (
+          <p className={"lobbyText"}>Joining the party</p>
+        ) : (
+          <p className={"lobbyText"}>
+            Your friends can join using the party id: {partyId}
+          </p>
+        )}
       </div>
-      <div className={"flatlist"}>
-        {users.map((item) => (
-          <div className={"flatlistContainer"} key={item.key}>
-            <div className={"imageAndNameContainer"}>
-              <div className={"imageContainer"}>
-                <img className={"image"} src={item.imageUrl ? item.imageUrl : userPhotoPlaceholder} />
+      {!joining ? (
+        <div className={"flatlist"}>
+          {users.map((item) => (
+            <div className={"flatlistContainer"} key={item.key}>
+              <div className={"imageAndNameContainer"}>
+                <div className={"imageContainer"}>
+                  <img
+                    className={"image"}
+                    src={item.imageUrl ? item.imageUrl : userPhotoPlaceholder}
+                  />
+                </div>
+                <p className={"username"}>{item.name}</p>
               </div>
-              <p className={"username"}>{item.name}</p>
+              {isAdmin ? (
+                <div onClick={() => console.log(`Remove = ${item.name}`)}>
+                  R
+                </div>
+              ) : null}
             </div>
-            {isAdmin ? (
-              <div onClick={() => console.log(`Remove = ${item.name}`)}>R</div>
-            ) : null}
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : null}
       {isAdmin ? (
         <div onClick={startPartyClickHandler} className={"pressable"}>
           <p className={"text"}>Start The Party</p>

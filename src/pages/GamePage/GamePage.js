@@ -59,43 +59,68 @@ const GamePage = () => {
   };
 
   useEffect(() => {
+    let unmounted = false;
     const runFunction = async () => {
       //console.log("questionNumber" + questionNumber);
       const returnedObject = await getQuestionText(questionNumber);
       setQuestionText(returnedObject.questionText);
     };
 
-    runFunction();
+    if (!unmounted) {
+      runFunction();
+    }
+
+    return () => {
+      unmounted = true;
+    };
   }, [questionNumber]);
 
   useEffect(() => {
-    console.log("showLeaderboard" + showLeaderboard);
-    if (showLeaderboard) {
-      updateUsers(partyId)(dispatch).then((returnedArray) => {
-        console.log("returnedArray " + returnedArray);
-        if (returnedArray.length) {
-          const filteredArray = returnedArray.filter((val) => val.score !== 0);
-          filteredArray.sort((a, b) => b.score - a.score);
-          setHighscore(filteredArray[0].score);
-          setArray(filteredArray);
+    //console.log("showLeaderboard" + showLeaderboard);
+    let unmounted = false;
+
+    if (!unmounted) {
+      if (showLeaderboard) {
+        updateUsers(partyId)(dispatch).then((returnedArray) => {
+          console.log("returnedArray " + returnedArray);
+          if (returnedArray.length) {
+            const filteredArray = returnedArray.filter(
+              (val) => val.score !== 0
+            );
+            filteredArray.sort((a, b) => b.score - a.score);
+            setHighscore(filteredArray[0].score);
+            setArray(filteredArray);
+          }
+        });
+      } else {
+        if (isAdmin) {
+          resetNumberOfAnswered(partyId);
+          updateQuestionNumber(partyId);
         }
-      });
-    } else {
-      if (isAdmin) {
-        resetNumberOfAnswered(partyId);
-        updateQuestionNumber(partyId);
+        resetScore(partyId, userId);
+        setHighscore(null);
+        setArray(null);
+        setSelected(false);
       }
-      resetScore(partyId, userId);
-      setHighscore(null);
-      setArray(null);
-      setSelected(false);
     }
+
+    return () => {
+      unmounted = true;
+    };
   }, [showLeaderboard]);
 
   useEffect(() => {
-    if (numOfAnswered === users.length) {
-      nextClicked();
+    let unmounted = false;
+
+    if (!unmounted) {
+      if (numOfAnswered === users.length) {
+        nextClicked();
+      }
     }
+
+    return () => {
+      unmounted = true;
+    };
   }, [numOfAnswered]);
 
   useEffect(() => {

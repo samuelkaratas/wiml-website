@@ -10,6 +10,7 @@ import {
   setPartyIdRedux,
   setIsAdmin,
   resetUsers,
+  setJoining,
 } from "../redux/game/game-actions";
 
 import firebase from "firebase/app";
@@ -84,6 +85,7 @@ export const joinParty = (partyId, userInfo) => {
       .getKey();
 
     dispatch(setUserId(key));
+    dispatch(setJoining(false));
   };
 };
 
