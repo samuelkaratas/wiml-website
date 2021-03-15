@@ -36,7 +36,7 @@ const JumbotronComponent = () => {
           >
             Download The App
           </Button>
-          <Button style={{ marginLeft: "10px" }} variant="success" href="/join">
+          <Button style={{ marginLeft: "10px" }} variant="success" href="/">
             Join a party
           </Button>
         </p>
