@@ -18,12 +18,12 @@ const LeaderboardItem = ({ username, score, imageUrl, isDrinking }) => {
       <div className={"leaderboardImageContainer"}>
         <img className={"image"} src={imageUrl ? imageUrl : userPhotoPlaceholder} />
       </div>
+      <p className={"leaderboardUsername"}>{username}</p>
       {isDrinking ? (
         <div className={"drinkGifContainer"}>
           <img className={"image"} src={gifArray[randomGif]} />
         </div>
       ) : null}
-      <p className={"leaderboardUsername"}>{username}</p>
       <p className={"leaderboardScore"}>{score}</p>
     </div>
   );

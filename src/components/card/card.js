@@ -24,9 +24,6 @@ const CardComponent = () => {
             time to get wasted.
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
       </Card>
       <Card style={{ backgroundColor: "transparent" }}>
         <Card.Img
@@ -43,9 +40,6 @@ const CardComponent = () => {
             share your similar memories in between questions!
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
       </Card>
       <Card style={{ backgroundColor: "transparent" }}>
         <Card.Img
@@ -62,9 +56,6 @@ const CardComponent = () => {
             people!
           </Card.Text>
         </Card.Body>
-        <Card.Footer>
-          <small className="text-muted">Last updated 3 mins ago</small>
-        </Card.Footer>
       </Card>
     </CardDeck>
   );

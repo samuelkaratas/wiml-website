@@ -29,10 +29,28 @@ import {
   updateQuestionNumber,
   setupQuestionNumberListener,
   getQuestionText,
+  detachJoinedListener,
+  detachStartedListener,
+  detachAnsweredListener,
+  detachShowLeaderboardListener,
+  detachQuestionNumberListener,
+  removeUserFromFirebase,
 } from "../../firebase/firebase";
+import {
+  resetUsers,
+  setGameStarted,
+  setIsAdmin,
+  setJoining,
+  setNumberOfPeopleAnswered,
+  setPartyIdRedux,
+  setQuestionNumber,
+  setShowLeaderboard,
+  setUserId,
+} from "../../redux/game/game-actions";
 
 const GamePage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const users = useSelector(selectUsers);
   const isAdmin = useSelector(selectIsAdmin);
@@ -47,6 +65,7 @@ const GamePage = () => {
   const [array, setArray] = useState(null);
   const [questionText, setQuestionText] = useState(null);
   const [selected, setSelected] = useState(false);
+  const [skipped, setSkipped] = useState(false);
 
   const nextClicked = async () => {
     //console.log("next Clicked");
@@ -82,14 +101,18 @@ const GamePage = () => {
     if (!unmounted) {
       if (showLeaderboard) {
         updateUsers(partyId)(dispatch).then((returnedArray) => {
-          console.log("returnedArray " + returnedArray);
+          //console.log("returnedArray " + returnedArray);
           if (returnedArray.length) {
             const filteredArray = returnedArray.filter(
               (val) => val.score !== 0
             );
-            filteredArray.sort((a, b) => b.score - a.score);
-            setHighscore(filteredArray[0].score);
-            setArray(filteredArray);
+            if (filteredArray.length) {
+              filteredArray.sort((a, b) => b.score - a.score);
+              setHighscore(filteredArray[0].score);
+              setArray(filteredArray);
+            } else {
+              setSkipped(true);
+            }
           }
         });
       } else {
@@ -101,6 +124,7 @@ const GamePage = () => {
         setHighscore(null);
         setArray(null);
         setSelected(false);
+        setSkipped(false);
       }
     }
 
@@ -129,6 +153,39 @@ const GamePage = () => {
     setupQuestionNumberListener(partyId)(dispatch);
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser);
+    window.addEventListener("unload", handleTabClosing);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+      window.removeEventListener("unload", handleTabClosing);
+    };
+  });
+
+  const handleTabClosing = () => {
+    detachJoinedListener(partyId);
+    detachStartedListener(partyId);
+    detachAnsweredListener(partyId);
+    detachShowLeaderboardListener(partyId);
+    detachQuestionNumberListener(partyId);
+    removeUserFromFirebase(partyId, userId);
+    dispatch(setPartyIdRedux(null));
+    dispatch(setUserId(0));
+    dispatch(setIsAdmin(null));
+    dispatch(resetUsers());
+    dispatch(setGameStarted(false));
+    dispatch(setNumberOfPeopleAnswered(0));
+    dispatch(setShowLeaderboard(false));
+    dispatch(setQuestionNumber(0));
+    dispatch(setJoining(false));
+    history.push("/home");
+  };
+
+  const alertUser = (event) => {
+    event.preventDefault();
+    event.returnValue = "Are you sure you want to leave the game?";
+  };
+
   return (
     <div className={"gameContainer"}>
       <QuestionBox question={questionText ? questionText : "Loading..."} />
@@ -143,6 +200,8 @@ const GamePage = () => {
         ) : (
           <p className={"answeredText"}>Waiting for others...</p>
         )
+      ) : skipped ? (
+        <p className={"answeredText"}>Host skipped the question</p>
       ) : (
         <LeaderboardList array={array} highscore={highscore} />
       )}

@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
 import shotImage from "../../assets/shot-image.jpeg";
+import homepageShotsImage from "../../assets/homepage_shots_image.jpeg";
 
 const JumbotronComponent = () => {
   return (
@@ -12,11 +13,12 @@ const JumbotronComponent = () => {
       fluid
       style={{
         display: "flex",
-        backgroundImage: `url(${shotImage})`,
+        backgroundImage: `url(${homepageShotsImage})`,
         backgroundSize: "cover",
         height: "600px",
         flexDirection: "column",
         justifyContent: "center",
+        opacity: 0.8
       }}
     >
       <Container style={{ maxWidth: '800px', backgroundColor: 'rgba(0,0,0,0.5)' }}>

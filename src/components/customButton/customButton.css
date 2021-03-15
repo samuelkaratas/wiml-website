@@ -5,8 +5,9 @@
   height: 50px;
   border-radius: 25px;
   opacity: 0.5;
-  align-items: center;
   justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 10px;
 }
 .button:hover {
     background-color: bisque;
@@ -16,6 +17,7 @@
   font-size: 18px;
   color: blue;
   font-weight: bold;
+  text-align: center;
 }
 
 @media screen and (max-width: 800px) {

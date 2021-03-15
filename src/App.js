@@ -16,13 +16,13 @@ function App() {
     <div className="App">
       <Header />
       <Switch className="switchContainer">
-        <Route exact path="/">
+        <Route exact path="/home">
           <HomePage />
         </Route>
         <Route exact path="/game/:pid">
           <GamePage />
         </Route>
-        <Route exact path="/join">
+        <Route exact path="/">
           <JoinPartyPage />
         </Route>
         <Route exact path="/lobby/:pid">

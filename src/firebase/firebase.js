@@ -139,7 +139,7 @@ export const setupSignoutListener = (partyId) => {
           dispatch(setNumberOfPeopleAnswered(0));
           dispatch(setShowLeaderboard(false));
           dispatch(setQuestionNumber(0));
-          history.push("/join");
+          history.push("/home");
         } else {
           dispatch(removeUser(item));
         }

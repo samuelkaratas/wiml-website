@@ -15,7 +15,7 @@ const FileUploader = ({ onFileSelectSuccess, onFileSelectError }) => {
 
   return (
     <div className="browseButton">
-      <label htmlFor="upload-photo">Click to add photo</label>
+      <label htmlFor="upload-photo">Choose photo</label>
       <input type="file" onChange={handleFileInput} accept="image/png" id="upload-photo" />
     </div>
   );

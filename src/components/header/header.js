@@ -81,13 +81,13 @@ const Header = () => {
     dispatch(setShowLeaderboard(false));
     dispatch(setQuestionNumber(0));
     dispatch(setJoining(false));
-    history.push("/");
+    history.push("/home");
   }
 
   return (
     <div style={{position: 'sticky', top: 0, zIndex: 1}}>
-      {!partyId ? (<Navbar collapseOnSelect expand="lg" style={{backgroundColor: '#e8e8e8'}} variant="light" sticky="top">
-        <Navbar.Brand href="/">Home</Navbar.Brand>
+      {!partyId ? (<Navbar collapseOnSelect expand="lg" bg='transparent' variant="dark" sticky="top">
+        <Navbar.Brand href="/home">Home</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -101,7 +101,7 @@ const Header = () => {
           </Nav>
           <Nav>
             <Nav.Link href="https://www.apple.com/tr/app-store/" target="_blank">Download the app</Nav.Link>
-            <Nav.Link eventKey={2} href="/join">
+            <Nav.Link eventKey={2} href="/">
               Join a party
             </Nav.Link>
           </Nav>
