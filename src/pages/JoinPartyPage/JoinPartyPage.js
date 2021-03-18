@@ -107,7 +107,7 @@ const JoinPartPage = (props) => {
           onFileSelectError={({ error }) => alert(error)}
         />
         <img
-          className="image"
+          className="joinImage"
           src={selectedFile.length ? selectedFile : userPhotoPlaceholder}
         />
       </div>

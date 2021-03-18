@@ -51,13 +51,14 @@
   align-items: center;
 }
 .image {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
 }
 .flatlistContainer {
   display: flex;
   flex-direction: row;
   margin-bottom: 5px;
+  margin-top: 5px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -70,9 +71,18 @@
 .lobbyText {
   display: flex;
   color: white;
-  font-size: 30px;
+  font-size: 25px;
   align-items: center;
   text-align: center;
+}
+.qrCode {
+  width: 80px;
+  height: 80px;
+}
+.innerTextQrContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 @media screen and (max-width: 800px) {

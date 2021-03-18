@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 
 import "./LobbyPage.css";
+
 import userPhotoPlaceholder from "../../assets/user-profile2.webp";
+import qrCode from "../../assets/frame.png";
 
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,9 +52,13 @@ const LobbyPage = () => {
         {joining ? (
           <p className={"lobbyText"}>Joining the party</p>
         ) : (
-          <p className={"lobbyText"}>
-            Your friends can join using the party id: {partyId}
-          </p>
+          <div className="innerTextQrContainer">
+            <p className={"lobbyText"}>
+              Your friends can go to whoismostlikely.com or scan the qr code
+              below and enter the party id: {partyId} to join your party
+            </p>
+            <img className={"qrCode"} src={qrCode} />
+          </div>
         )}
       </div>
       {!joining ? (

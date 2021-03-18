@@ -9,7 +9,14 @@
   align-items: center;
   margin: 5px;
 }
+
+.userButtonContainer:hover {
+  background-color: cadetblue;
+  cursor: pointer;
+}
+
 .userButtonImageContainer {
+  display: flex;
   width: 60px;
   height: 60px;
   border-radius: 30px;
@@ -18,8 +25,8 @@
   align-items: center;
 }
 .image {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  height: auto;
 }
 .username {
   color: white;
