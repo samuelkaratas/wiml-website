@@ -4,7 +4,6 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
-import shotImage from "../../assets/shot-image.jpeg";
 import homepageShotsImage from "../../assets/homepage_shots_image.jpeg";
 
 const JumbotronComponent = () => {

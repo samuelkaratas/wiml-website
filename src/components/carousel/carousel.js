@@ -5,9 +5,6 @@ import "./carousel.css";
 import Carousel from "react-bootstrap/Carousel";
 
 import bgImg from "../../assets/background.png";
-import sim1 from "../../assets/sim1.png";
-import sim2 from "../../assets/sim2.png";
-import sim3 from "../../assets/sim3.png";
 
 const CarouselComponent = () => {
   return (
@@ -18,7 +15,7 @@ const CarouselComponent = () => {
             <img
               style={{ height: "500px", margin: "auto" }}
               className="d-block"
-              src={sim1}
+              src={bgImg}
               alt="First slide"
             />
             <Carousel.Caption>
@@ -30,7 +27,7 @@ const CarouselComponent = () => {
             <img
               style={{ height: "500px", margin: "auto" }}
               className="d-block"
-              src={sim2}
+              src={bgImg}
               alt="Second slide"
             />
             <Carousel.Caption>
@@ -42,7 +39,7 @@ const CarouselComponent = () => {
             <img
               style={{ maxHeight: "500px", margin: "auto" }}
               className="d-block"
-              src={sim3}
+              src={bgImg}
               alt="Third slide"
             />
             <Carousel.Caption>
