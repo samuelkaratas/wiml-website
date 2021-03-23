@@ -4,9 +4,9 @@ import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
 import Badge from "react-bootstrap/Badge";
 
-import partyImage from "../../assets/party-image.png";
-import expansionImage from "../../assets/modes.png";
-import modesImage from "../../assets/game-modes.png";
+import partyImage from "../../assets/drunk_card.png";
+import expansionImage from "../../assets/memories_card.png";
+import modesImage from "../../assets/app_card.png";
 
 const CardComponent = () => {
   return (

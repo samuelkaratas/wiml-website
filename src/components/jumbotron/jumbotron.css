@@ -1,0 +1,18 @@
+.jumbo-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+.jumbo-items {
+    display: flex;
+    flex: 1;
+}
+
+@media screen and (max-width: 800px) {
+  .jumbo-container {
+    flex-direction: column;
+  }
+}
