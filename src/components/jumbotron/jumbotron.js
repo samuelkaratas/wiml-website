@@ -15,7 +15,7 @@ const JumbotronComponent = () => {
       <div className="jumbo-items">
         <Container style={{ maxWidth: "800px", margin: "5px" }}>
           <h1 style={{ color: "white" }}>Who Is Most Likely</h1>
-          <h5 style={{ color: "white" }}>A drinking game for horrible people</h5>
+          <h5 style={{ color: "white" }}>A party game for horrible people</h5>
           <p style={{ color: "white" }}>
             Learn who is most likely to do something horrible among your friends
             and get to see what your friends really think about you!

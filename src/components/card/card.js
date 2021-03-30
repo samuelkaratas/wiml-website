@@ -8,10 +8,8 @@ import partyImage from "../../assets/drunk_card.png";
 import expansionImage from "../../assets/memories_card.png";
 import modesImage from "../../assets/app_card.png";
 
-const CardComponent = () => {
-  return (
-    <CardDeck>
-      <Card style={{ backgroundColor: "transparent" }}>
+/*
+<Card style={{ backgroundColor: "transparent" }}>
         <Card.Img
           variant="top"
           src={partyImage}
@@ -25,6 +23,11 @@ const CardComponent = () => {
           </Card.Text>
         </Card.Body>
       </Card>
+      */
+
+const CardComponent = () => {
+  return (
+    <CardDeck>
       <Card style={{ backgroundColor: "transparent" }}>
         <Card.Img
           variant="top"
