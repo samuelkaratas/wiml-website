@@ -11,13 +11,33 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectUsers,
   selectPartyId,
+  selectUserId,
   selectIsAdmin,
   selectStarted,
-  selectUserId,
   selectJoining,
 } from "../../redux/game/game-selectors";
 
-import { setupSignoutListener } from "../../firebase/firebase";
+import {
+  setupSignoutListener,
+  detachJoinedListener,
+  detachStartedListener,
+  detachAnsweredListener,
+  detachShowLeaderboardListener,
+  detachQuestionNumberListener,
+  removeUserFromFirebase,
+} from "../../firebase/firebase";
+
+import {
+  resetUsers,
+  setGameStarted,
+  setIsAdmin,
+  setJoining,
+  setNumberOfPeopleAnswered,
+  setPartyIdRedux,
+  setQuestionNumber,
+  setShowLeaderboard,
+  setUserId,
+} from "../../redux/game/game-actions";
 
 const LobbyPage = () => {
   let { pid } = useParams();
@@ -44,6 +64,45 @@ const LobbyPage = () => {
 
   const startPartyClickHandler = () => {
     console.log("asdvgsdv");
+  };
+
+  useEffect(() => {
+    window.addEventListener("beforeunload", alertUser);
+    window.addEventListener("unload", handleTabClosing);
+    window.addEventListener("popstate", handlePopstate);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+      window.removeEventListener("unload", handleTabClosing);
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  });
+
+  const handlePopstate = () => {
+    history.go(1);
+  };
+
+  const handleTabClosing = () => {
+    detachJoinedListener(partyId);
+    detachStartedListener(partyId);
+    detachAnsweredListener(partyId);
+    detachShowLeaderboardListener(partyId);
+    detachQuestionNumberListener(partyId);
+    removeUserFromFirebase(partyId, userId);
+    dispatch(setPartyIdRedux(null));
+    dispatch(setUserId(0));
+    dispatch(setIsAdmin(null));
+    dispatch(resetUsers());
+    dispatch(setGameStarted(false));
+    dispatch(setNumberOfPeopleAnswered(0));
+    dispatch(setShowLeaderboard(false));
+    dispatch(setQuestionNumber(0));
+    dispatch(setJoining(false));
+    history.push("/home");
+  };
+
+  const alertUser = (event) => {
+    event.preventDefault();
+    event.returnValue = "Are you sure you want to leave the game?";
   };
 
   return (

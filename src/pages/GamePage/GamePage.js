@@ -67,10 +67,6 @@ const GamePage = () => {
   const [selected, setSelected] = useState(false);
   const [skipped, setSkipped] = useState(false);
 
-  const nextClicked = async () => {
-    //console.log("next Clicked");
-  };
-
   const userClicked = (item) => {
     //console.log(item);
     updateNumberOfPeopleAnswered(partyId, item.key);
@@ -95,7 +91,6 @@ const GamePage = () => {
   }, [questionNumber]);
 
   useEffect(() => {
-    //console.log("showLeaderboard" + showLeaderboard);
     let unmounted = false;
 
     if (!unmounted) {
@@ -116,10 +111,6 @@ const GamePage = () => {
           }
         });
       } else {
-        if (isAdmin) {
-          resetNumberOfAnswered(partyId);
-          updateQuestionNumber(partyId);
-        }
         resetScore(partyId, userId);
         setHighscore(null);
         setArray(null);
@@ -132,20 +123,6 @@ const GamePage = () => {
       unmounted = true;
     };
   }, [showLeaderboard]);
-
-  useEffect(() => {
-    let unmounted = false;
-
-    if (!unmounted) {
-      if (numOfAnswered === users.length) {
-        nextClicked();
-      }
-    }
-
-    return () => {
-      unmounted = true;
-    };
-  }, [numOfAnswered]);
 
   useEffect(() => {
     setupAnsweredListener(partyId)(dispatch);
@@ -206,16 +183,7 @@ const GamePage = () => {
         <LeaderboardList array={array} highscore={highscore} />
       )}
 
-      {isAdmin ? (
-        <div onClick={nextClicked} className={"nextButton"}>
-          {!showLeaderboard ? (
-            <p className={"nextButtonText"}>
-              {numOfAnswered}/{users.length}
-            </p>
-          ) : null}
-          N
-        </div>
-      ) : !showLeaderboard ? (
+      {!showLeaderboard ? (
         <div className={"nextButton"}>
           <p className={"nextButtonText"}>
             {numOfAnswered}/{users.length}

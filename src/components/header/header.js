@@ -64,8 +64,28 @@ const Header = () => {
 
   const numOfAnswered = useSelector(selectNumberOfPeopleAnswered);
 
-  const leavePartyClick = () => {
+  const leavePartyClick = async () => {
+    const user = users.filter((user) => user.key === userId);
     console.log("log out");
+
+    console.log(user);
+
+    if (user[0].imageUrl) {
+      const requestOptions = {
+        mode: "cors",
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageUrl: `${user[0].imageUrl}` }),
+      };
+
+      const res = await fetch(
+        "https://pacific-wave-19073.herokuapp.com/deleteImage",
+        requestOptions
+      );
+      const resJson = await res.json();
+      console.log(resJson);
+    }
+
     detachJoinedListener(partyId);
     detachStartedListener(partyId);
     detachAnsweredListener(partyId);
@@ -82,35 +102,69 @@ const Header = () => {
     dispatch(setQuestionNumber(0));
     dispatch(setJoining(false));
     history.push("/home");
-  }
+  };
 
   return (
-    <div style={{position: 'sticky', top: 0, zIndex: 1}}>
-      {!partyId ? (<Navbar collapseOnSelect expand="lg" style={{backgroundColor: 'rgba(136,197,220,0.7)'}} variant="light" sticky="top">
-        <Navbar.Brand href="/home">Home</Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto">
-            <NavDropdown title="Follow Us" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="https://twitter.com/whoismostlikely" target="_blank">Twitter</NavDropdown.Item>
-              <NavDropdown.Item href="https://www.instagram.com/whoismostlikely" target="_blank">
-                Instagram
-              </NavDropdown.Item>
-              <NavDropdown.Item href="https://www.facebook.com/" target="_blank">Facebook</NavDropdown.Item>
-            </NavDropdown>
+    <div style={{ position: "sticky", top: 0, zIndex: 1 }}>
+      {!partyId ? (
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          style={{ backgroundColor: "rgba(136,197,220,0.7)" }}
+          variant="light"
+          sticky="top"
+        >
+          <Navbar.Brand href="/home">Home</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              <NavDropdown title="Follow Us" id="collasible-nav-dropdown">
+                <NavDropdown.Item
+                  href="https://twitter.com/whoismostlikely"
+                  target="_blank"
+                >
+                  Twitter
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="https://www.instagram.com/whoismostlikely"
+                  target="_blank"
+                >
+                  Instagram
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                >
+                  Facebook
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+            <Nav>
+              <Nav.Link
+                href="https://www.apple.com/tr/app-store/"
+                target="_blank"
+              >
+                Download the app
+              </Nav.Link>
+              <Nav.Link eventKey={2} href="/">
+                Join a party
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+      ) : (
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          bg="transparent"
+          variant="light"
+          sticky="top"
+        >
+          <Nav className="ml-auto">
+            <Nav.Link onClick={leavePartyClick}>Leave Party</Nav.Link>
           </Nav>
-          <Nav>
-            <Nav.Link href="https://www.apple.com/tr/app-store/" target="_blank">Download the app</Nav.Link>
-            <Nav.Link eventKey={2} href="/">
-              Join a party
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>) : (<Navbar collapseOnSelect expand="lg" bg="transparent" variant="light" sticky="top">
-        <Nav className="ml-auto">
-          <Nav.Link onClick={leavePartyClick}>Leave Party</Nav.Link>
-        </Nav>
-      </Navbar>)}
+        </Navbar>
+      )}
     </div>
   );
 };

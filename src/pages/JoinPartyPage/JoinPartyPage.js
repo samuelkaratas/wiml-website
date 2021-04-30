@@ -6,7 +6,7 @@ import CustomInput from "../../components/customInput/customInput";
 
 import CustomButton from "../../components/customButton/customButton";
 
-import CustomModal from "../../components/customModal/customModal";
+import Spinner from 'react-bootstrap/Spinner'
 
 import {
   checkIfRoomExsist,
@@ -15,7 +15,7 @@ import {
 } from "../../firebase/firebase";
 
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   setPartyIdRedux,
@@ -25,7 +25,7 @@ import {
 
 import FileUploader from "../../components/fileUploader/fileUploader";
 
-import userPhotoPlaceholder from "../../assets/user-profile2.webp";
+import userPhotoPlaceholder from "../../assets/user_placeholder.png";
 
 const JoinPartPage = (props) => {
   const dispatch = useDispatch();
@@ -40,26 +40,42 @@ const JoinPartPage = (props) => {
   const [selectedFile2, setSelectedFile2] = useState("");
 
   const [loadingPhoto, setLoadingPhoto] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onJoinHandler = async () => {
-    const exsist = await checkIfRoomExsist(partyId);
-    if (exsist) {
-      dispatch(setJoining(true));
-      joinParty(partyId, {
-        name: name,
-        imageUrl: image,
-        isAdmin: false,
-        score: 0,
-      })(dispatch);
-      setupJoinedListener(partyId)(dispatch);
-      dispatch(setPartyIdRedux(partyId));
-      dispatch(setIsAdmin(false));
-
-      history.push(`/lobby/${partyId}`);
-    } else {
-      alert("Party doesn't exsist");
-    }
+    setLoading(true);
   };
+
+  useEffect(() => {
+    const asyncFunction = async () => {
+      const exsist = await checkIfRoomExsist(partyId);
+      if (name.length && partyId.length) {
+        if (exsist) {
+          dispatch(setJoining(true));
+          joinParty(partyId, {
+            name: name,
+            imageUrl: image,
+            isAdmin: false,
+            score: 0,
+          })(dispatch);
+          setupJoinedListener(partyId)(dispatch);
+          dispatch(setPartyIdRedux(partyId));
+          dispatch(setIsAdmin(false));
+          setLoading(false);
+          history.push(`/lobby/${partyId}`);
+        } else {
+          alert("Party doesn't exsist");
+          setLoading(false);
+        }
+      } else {
+        alert("Please fill out all the fields.");
+        setLoading(false);
+      }
+    };
+    if (loading) {
+      asyncFunction();
+    }
+  }, [loading]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -133,7 +149,9 @@ const JoinPartPage = (props) => {
       />
 
       {loadingPhoto ? (
-        <p style={{ color: "white" }}>Uploading photo to service...</p>
+        <Spinner animation="grow" variant="light" />
+      ) : loading ? (
+        <Spinner animation="grow" variant="light" />
       ) : (
         <CustomButton onPress={onJoinHandler}>Join</CustomButton>
       )}
