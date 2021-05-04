@@ -15,6 +15,7 @@ import {
 
 import firebase from "firebase/app";
 import "firebase/database";
+import 'firebase/analytics'
 require("firebase/firestore");
 
 // Optionally import the services that you want to use
@@ -33,6 +34,7 @@ const firebaseConfig = {
   storageBucket: "wiml-5626d.appspot.com",
   messagingSenderId: "936378370479",
   appId: "1:936378370479:web:795c02de652eeaced9875a",
+  measurementId: "G-WZ6074H09Y"
 };
 
 if (!firebase.apps.length) {
@@ -42,6 +44,10 @@ if (!firebase.apps.length) {
 //var database = firebase.database();
 
 const db = firebase.firestore();
+
+const analytics = firebase.analytics();
+
+analytics.logEvent('testing');
 
 export const addQuestion = (ind, questionText) => {
   db.collection("questions/")
@@ -86,6 +92,7 @@ export const joinParty = (partyId, userInfo) => {
 
     dispatch(setUserId(key));
     dispatch(setJoining(false));
+    analytics.logEvent('joined_party');
   };
 };
 
@@ -112,7 +119,7 @@ export const setupJoinedListener = (partyId) => {
   };
 };
 
-export const setupSignoutListener = (partyId) => {
+export const setupSignoutListener = (partyId, userId) => {
   return function (dispatch, history) {
     const ref = firebase.database().ref("parties/" + partyId + "/users");
 
@@ -125,7 +132,7 @@ export const setupSignoutListener = (partyId) => {
         var item = data.val();
         item.key = data.key;
 
-        if (item.isAdmin) {
+        if (item.isAdmin || data.key === userId) {
           detachJoinedListener(partyId);
           detachStartedListener(partyId);
           detachAnsweredListener(partyId);

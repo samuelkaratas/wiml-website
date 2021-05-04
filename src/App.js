@@ -11,7 +11,14 @@ import JoinPartyPage from "./pages/JoinPartyPage/JoinPartyPage";
 import LobbyPage from "./pages/LobbyPage/LobbyPage";
 import HomePage from "./pages/HomePage/HomePage";
 
+import { useSelector } from "react-redux";
+
+import { selectPartyId, selectUserId } from "./redux/game/game-selectors";
+
 function App() {
+  const userId = useSelector(selectUserId);
+  const partyId = useSelector(selectPartyId);
+
   return (
     <div className="App">
       <Header />
@@ -20,13 +27,13 @@ function App() {
           <HomePage />
         </Route>
         <Route exact path="/game/:pid">
-          <GamePage />
+          {!partyId ? <Redirect to="/home" /> : <GamePage />}
         </Route>
         <Route exact path="/">
           <JoinPartyPage />
         </Route>
         <Route exact path="/lobby/:pid">
-          <LobbyPage />
+          {!partyId ? <Redirect to="/home" /> : <LobbyPage />}
         </Route>
       </Switch>
     </div>

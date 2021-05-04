@@ -66,9 +66,13 @@ const Header = () => {
 
   const leavePartyClick = async () => {
     const user = users.filter((user) => user.key === userId);
-    console.log("log out");
 
-    console.log(user);
+    detachJoinedListener(partyId);
+    detachStartedListener(partyId);
+    detachAnsweredListener(partyId);
+    detachShowLeaderboardListener(partyId);
+    detachQuestionNumberListener(partyId);
+    removeUserFromFirebase(partyId, userId);
 
     if (user[0].imageUrl) {
       const requestOptions = {
@@ -86,12 +90,6 @@ const Header = () => {
       console.log(resJson);
     }
 
-    detachJoinedListener(partyId);
-    detachStartedListener(partyId);
-    detachAnsweredListener(partyId);
-    detachShowLeaderboardListener(partyId);
-    detachQuestionNumberListener(partyId);
-    removeUserFromFirebase(partyId, userId);
     dispatch(setPartyIdRedux(null));
     dispatch(setUserId(0));
     dispatch(setIsAdmin(null));

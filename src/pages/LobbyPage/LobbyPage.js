@@ -53,7 +53,7 @@ const LobbyPage = () => {
   const joining = useSelector(selectJoining);
 
   useEffect(() => {
-    setupSignoutListener(partyId)(dispatch, history);
+    setupSignoutListener(partyId, userId)(dispatch, history);
   }, []);
 
   useEffect(() => {

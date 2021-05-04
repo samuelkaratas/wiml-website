@@ -6,7 +6,7 @@ import CustomInput from "../../components/customInput/customInput";
 
 import CustomButton from "../../components/customButton/customButton";
 
-import Spinner from 'react-bootstrap/Spinner'
+import Spinner from "react-bootstrap/Spinner";
 
 import {
   checkIfRoomExsist,
@@ -62,6 +62,9 @@ const JoinPartPage = (props) => {
           dispatch(setPartyIdRedux(partyId));
           dispatch(setIsAdmin(false));
           setLoading(false);
+          window.fbq("track", "ViewContent", {
+            content_type: "Join Party",
+          });
           history.push(`/lobby/${partyId}`);
         } else {
           alert("Party doesn't exsist");
