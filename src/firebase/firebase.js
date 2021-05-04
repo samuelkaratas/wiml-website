@@ -47,8 +47,6 @@ const db = firebase.firestore();
 
 const analytics = firebase.analytics();
 
-analytics.logEvent('testing');
-
 export const addQuestion = (ind, questionText) => {
   db.collection("questions/")
     .doc(ind)
