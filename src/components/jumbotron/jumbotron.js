@@ -23,7 +23,7 @@ const JumbotronComponent = () => {
           <p>
             <Button
               variant="info"
-              href="https://www.apple.com/tr/app-store/"
+              href="https://apps.apple.com/us/app/who-is-most-likely/id1559377050"
               target="_blank"
             >
               Download The App
